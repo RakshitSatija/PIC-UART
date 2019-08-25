@@ -1,0 +1,75 @@
+#include<pic.h>
+void lcd();
+void data();
+void command();
+void delay(int x);
+
+void main()
+{
+TXSTA=0x24;
+RCSTA=0X90;
+SPBRG=25;
+
+TRISC=0X80;
+TRISD=0x00;
+PORTC=0x00;
+lcd();
+while(1)
+{
+
+for(int i=0;i<10;i++)
+{
+
+	while(RCIF==0);
+	RCIF=0;
+	PORTD=RCREG;
+	data();
+	delay(50);
+
+
+}
+
+}
+}
+
+void command()
+{
+RC0=0;
+RC1=1;
+delay(100);
+RC1=0;
+delay(200);
+}
+
+void data()
+{
+RC0=1;
+RC1=1;
+delay(100);
+RC1=0;
+delay(200);
+}
+
+void delay(int x)
+{
+while(x--);
+}
+
+void lcd()
+{
+PORTD=0X38;
+command();
+delay(50);
+
+PORTD=0X01;
+command();
+delay(50);
+
+PORTD=0X0C;
+command();
+delay(50);
+
+PORTD=0X80;
+command();
+delay(50);
+}
