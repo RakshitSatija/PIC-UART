@@ -1,0 +1,18 @@
+#include<pic.h>
+
+void main()
+{
+TRISC=0X80;
+TXSTA=0X24;
+SPBRG=25;
+SPEN=1;
+int array[11]={'R','A','K','S','H','I','T',' ','S'};
+for(int i=0; i<=10; i++)
+	{
+	TXREG=array[i];
+	while(TXIF==0);		
+	TXIF=0;
+	}
+while(1);
+}
+
